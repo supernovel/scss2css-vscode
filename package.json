@@ -1,0 +1,51 @@
+{
+	"name": "scss2css",
+	"displayName": "scss2css",
+	"description": "compile scss",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.35.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onCommand:extension.scss2css",
+		"onCommand:extension.css2scss"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.scss2css",
+				"title": "scss2css"
+			},
+			{
+				"command": "extension.css2scss",
+				"title": "css2scss"
+			}
+		]
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "npm run compile && node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"@types/lodash": "^4.14.135",
+		"@types/lodash-es": "^4.17.3",
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.12.21",
+		"@types/sass": "^1.16.0",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
+	},
+	"dependencies": {
+		"csscomb": "^4.3.0",
+		"lodash": "^4.17.11",
+		"sass": "^1.22.1"
+	}
+}

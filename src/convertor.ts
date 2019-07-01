@@ -31,7 +31,7 @@ export async function scss2css(options: sass.Options): Promise<ConvertResult>{
     }
 } 
 
-export async function css2sass({ data }: { data: string }): Promise<ConvertResult>{
+export async function css2scss({ data }: { data: string }): Promise<ConvertResult>{
     const scssContent = await cssToScss(data);
 
     return {

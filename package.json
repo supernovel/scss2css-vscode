@@ -1,8 +1,10 @@
 {
 	"name": "scss2css",
 	"displayName": "scss2css",
-	"description": "compile scss",
-	"version": "0.0.1",
+	"description": "Convert scss, css",
+	"version": "0.0.2",
+	"publisher": "supernovel",
+	"repository": "https://github.com/supernovel/scss2css-vscode",
 	"engines": {
 		"vscode": "^1.35.0"
 	},
@@ -35,17 +37,17 @@
 	},
 	"devDependencies": {
 		"@types/lodash": "^4.14.135",
-		"@types/lodash-es": "^4.17.3",
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
+		"@types/prettier": "^1.16.4",
 		"@types/sass": "^1.16.0",
 		"tslint": "^5.12.1",
 		"typescript": "^3.3.1",
 		"vscode": "^1.1.28"
 	},
 	"dependencies": {
-		"csscomb": "^4.3.0",
 		"lodash": "^4.17.11",
+		"prettier": "^1.18.2",
 		"sass": "^1.22.1"
 	}
 }

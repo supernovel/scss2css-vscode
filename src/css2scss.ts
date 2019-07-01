@@ -2,11 +2,9 @@
  * refer to https://github.com/Firebrand/styleflux
  */
 import * as sass from 'sass';
-// @ts-ignore
-import * as csscomb from 'csscomb';
+import * as prettier from 'prettier';
 import { merge } from 'lodash'; 
 
-const beautifier = new csscomb('csscomb');
 const BLOCK_REGEXP = /\s*(([^\{\}]+)\{([^\{\}]+)\})\s*/;
 
 function processCssHead(headContent: string){
@@ -113,10 +111,16 @@ export async function cssToObject(cssContent: string): Promise<{
         });
     });
 
+    const charsetRegExp = /^@charset\s\"([^\"]+)\";/;
+    
     plainCss = result.css.toString();
     plainCss = cssToSingleLine(plainCss);
-    const charset = (plainCss.match(/^@charset\s\"([^\"]+)\";/) || [])[1];
-    const cssArray = cssToArray(cssContent);
+    
+    const charset = (plainCss.match(charsetRegExp) || [])[0];
+    
+    plainCss = plainCss.replace(charsetRegExp, '');
+    
+    const cssArray = cssToArray(plainCss);
     const cssObject = cssArrayToObject(cssArray);
 
     return {
@@ -128,6 +132,5 @@ export async function cssToObject(cssContent: string): Promise<{
 export async function cssToScss(cssContent: string){
     const { charset = '', data:cssObject } = await cssToObject(cssContent);
     let scssContent = cssObjectToScss(cssObject);
-    scssContent = await beautifier.processString(`${charset}${scssContent}`, { syntax: 'scss' });
-    return scssContent;
+    return prettier.format(`${charset}${scssContent}`, { parser: 'scss' });
 }

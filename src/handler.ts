@@ -1,14 +1,14 @@
 import * as vscode from "vscode";
-import { scss2css, css2scss } from "./convertor";
+import { scssToCss, cssToScss } from "./convertor";
 import { get } from "lodash";
 import { getConfiguration, getConvertSrc, replaceText, openNewEditor } from "./util";
 
 const avaliableConvert = {
   css: {
-    scss: css2scss
+    scss: cssToScss
   },
   scss: {
-    css: scss2css
+    css: scssToCss
   }
 };
 
@@ -32,36 +32,43 @@ export default function getCommandHandler({
     const { activeTextEditor: editor } = vscode.window;
 
     if (editor) {
-      const { range, text, fileName } = getConvertSrc({
+      let { range, text, fileName } = getConvertSrc({
         editor,
         languageId: srcLanguageId
       });
 
       if (text && text.length) {
-        vscode.window.showInformationMessage(
-          `Start ${srcLanguageId} to ${targetLanguageId}`
-        );
-
         try {
+          const targetOptions: any = getConfiguration(targetLanguageId);
           const { text: convertedText } = await convertFunction({
+            ...targetOptions, 
             data: text
           });
           const mode: any = getConfiguration("mode");
 
-          if (mode === "replace") {
-            await replaceText({
-              editor,
-              range,
-              text: convertedText
-            });
-          } else {
-            await openNewEditor({
-              language: targetLanguageId,
-              text: convertedText,
-              fileName: fileName
-                ? fileName.replace(`.${srcLanguageId}`, `.${targetLanguageId}`)
-                : undefined
-            });
+          switch(mode){
+            case "replace":
+              await replaceText({
+                editor,
+                range,
+                text: convertedText
+              });
+              break;
+            case "save":
+              await openNewEditor({
+                language: targetLanguageId,
+                text: convertedText,
+                fileName: fileName
+                  ? fileName.replace(`.${srcLanguageId}`, `.${targetLanguageId}`)
+                  : undefined
+              });
+              break;
+            default:
+              await openNewEditor({
+                language: targetLanguageId,
+                text: convertedText
+              });
+              break;
           }
 
           vscode.window.showInformationMessage(

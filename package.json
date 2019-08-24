@@ -26,7 +26,34 @@
 				"command": "extension.css2scss",
 				"title": "css2scss"
 			}
-		]
+		],
+		"configuration": {
+			"title": "SCSS2CSS",
+			"properties": {
+				"scss2css.mode": {
+					"type": "string",
+					"default": "side",
+					"enum": ["replace", "side", "save"],
+					"description": "`replace`(Replace string) or `side`(Open SidePanel) or `save`(Save and Open SidePanel)"
+				},
+				"scss2css.saveMode": {
+					"type": "string",
+					"default": "ask",
+					"enum": ["override", "append", "ask"],
+					"description": "What to do if the file already exists."
+				},
+				"scss2css.sass": {
+					"type": "object",
+					"default": null,
+					"description": "SASS Option"
+				},
+				"scss2css.css": {
+					"type": "object",
+					"default": null,
+					"description": "CSS Option"
+				}
+			}
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

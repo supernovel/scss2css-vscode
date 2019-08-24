@@ -129,8 +129,14 @@ export async function cssToObject(cssContent: string): Promise<{
     };
 }
  
-export async function cssToScss(cssContent: string){
-    const { charset = '', data:cssObject } = await cssToObject(cssContent);
-    let scssContent = cssObjectToScss(cssObject);
-    return prettier.format(`${charset}${scssContent}`, { parser: 'scss' });
+export async function cssToScss({ data:cssContent }: ConvertOption): Promise<ConvertResult>{
+    if(cssContent && cssContent.length){
+        const { charset = '', data:cssObject } = await cssToObject(cssContent);
+        let scssContent = cssObjectToScss(cssObject);
+        return {
+            text: prettier.format(`${charset}${scssContent}`, { parser: 'scss' })
+        };
+    }else{
+        throw new Error('Require not empty string.');
+    }
 }

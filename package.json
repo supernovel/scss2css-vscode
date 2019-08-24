@@ -2,7 +2,7 @@
 	"name": "scss2css",
 	"displayName": "scss2css",
 	"description": "Convert scss, css",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"publisher": "supernovel",
 	"repository": "https://github.com/supernovel/scss2css-vscode",
 	"engines": {
